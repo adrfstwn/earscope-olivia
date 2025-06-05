@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Real-Time Kamera</title>
+
+    <!-- Font Awesome -->
+    <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/js/all.min.js"></script>
+
+    <!-- Service Worker untuk PWA -->
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("/static/service-worker.js")
+          .then((reg) => console.log("Service Worker registered!", reg))
+          .catch((err) => console.log("Service Worker registration failed!", err));
+      }
+    </script>
+
+    <!-- Manifest dan CSS -->
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  </head>
+  <body>
+    <div class="camera-container" id="cameraFrame">
+      <!-- Logo Universitas -->
+      <div class="logo-container">
+        <img src="{{ url_for('static', filename='logo/d3ti.png') }}" alt="D3TI Logo" />
+        <img src="{{ url_for('static', filename='logo/uns.png') }}" alt="UNS Logo" />
+      </div>
+
+      <!-- Video stream -->
+      <img id="video" />
+
+      <!-- Kontrol Start dan Stop -->
+      <div class="controls">
+        <button class="open">
+          <i class="fas fa-video"></i> Start
+        </button>
+        <button class="close">
+          <i class="fas fa-stop"></i> Stop
+        </button>
+      </div>
+    </div>
+
+    <!-- Pesan No Internet -->
+    <div id="noInternet" style="
+      display: none;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: red;
+      color: white;
+      padding: 30px 60px;
+      border-radius: 8px;
+      z-index: 99;
+    ">
+      Tidak ada koneksi internet. Periksa WiFi Anda!
+    </div>
+
+    <!-- Socket.IO (optional) -->
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+
+    <!-- Script utama -->
+    <script>
+      const video = document.getElementById("video");
+      const startBtn = document.querySelector(".open");
+      const stopBtn = document.querySelector(".close");
+      const noInternet = document.getElementById("noInternet");
+      let streamStarted = false;
+
+      async function checkInternet() {
+        try {
+          const response = await fetch("/process_video", { method: "HEAD" });
+          noInternet.style.display = response.ok ? "none" : "block";
+        } catch (e) {
+          noInternet.style.display = "block";
+        }
+      }
+
+      setInterval(checkInternet, 1000); // Cek koneksi tiap 5 detik
+
+      startBtn.addEventListener("click", () => {
+        if (!streamStarted) {
+          video.src = "/process_video";
+          streamStarted = true;
+        }
+      });
+
+      stopBtn.addEventListener("click", async () => {
+        await fetch("/stop_recording", { method: "POST" });
+        setTimeout(() => location.reload(), 3000); // Refresh otomatis 3 detik setelah stop
+      });
+    </script>
+  </body>
+</html>

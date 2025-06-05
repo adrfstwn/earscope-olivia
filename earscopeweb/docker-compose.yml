@@ -1,0 +1,53 @@
+services:
+  earscopeweb-backend:
+    image: earscopeweb-backend:latest
+    container_name: earscopeweb-backend
+    build: 
+      context: ./backend
+    ports:
+      - "8010:8010"
+    networks:
+      - earscopeweb-network
+      - mysql-network
+      - nginx-network
+    restart: unless-stopped
+    volumes:
+      - /var/www/log/earscopeweb-backend/storage/logs:/app/storage/logs # Sinkronisasi log ke host
+      - /var/www/earscopeweb-backend/storage/app/private:/app/storage/app/private # Sinkronisasi storage
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8010/up"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 5s
+
+  earscopeweb-frontend:
+    image: earscopeweb-frontend:latest
+    container_name: earscopeweb-frontend
+    build: 
+      context: ./frontend
+    ports:
+      - "8011:80"
+    networks:
+      - earscopeweb-network
+      - nginx-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 5s
+
+networks:
+  earscopeweb-network:
+    name: earscopeweb-network
+    driver: bridge
+
+  mysql-network:
+    name: mysql-network
+    external: true
+
+  nginx-network:
+    name: nginx-network
+    external: true
