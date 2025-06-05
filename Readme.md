@@ -35,7 +35,7 @@
 ## 🛠️ Teknologi yang Digunakan
 
 - YOLOv8 (Deep Learning Model)
-- VueJS & LaraveL (Frontend & Backend Website)
+- VueJS & Laravel (Frontend & Backend Website)
 - Python + Flask (Backend & Tampilan di Alat)
 - Raspberry Pi + Kamera Endoskopi (Perangkat IoT)
 - Docker + Jenkins (Deployment Website)
