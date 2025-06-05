@@ -6,6 +6,13 @@
 
 ---
 
+## 🔗 Link Terkait
+
+- 📄 **Deskripsi Karya**: [Deskripsi Karya](https://drive.google.com/file/d/1_Sho6csTDS_K9XdTwuMxzRMNYNtFvZis/view?usp=sharing)
+- 🎥 **Video Demo**: [Video Demo](https://drive.google.com/file/d/1QwuM1rO8qx6WFIayg_SzxirzDtau7EHY/view?usp=sharing)
+
+---
+
 ## 📎 Tentang Proyek
 
 **EarScope** adalah sistem deteksi penyakit telinga yang menggabungkan:
@@ -13,13 +20,6 @@
 - Kamera endoskopi untuk visualisasi telinga secara real-time
 - Algoritma Deep Learning untuk deteksi otomatis
 - Website manajemen hasil pemeriksaan secara online
-
----
-
-## 🔗 Link Terkait
-
-- 📄 **Deskripsi Karya**: [Deskripsi Karya](https://drive.google.com/file/d/1_Sho6csTDS_K9XdTwuMxzRMNYNtFvZis/view?usp=sharing)
-- 🎥 **Video Demo**: [Video Demo](https://drive.google.com/file/d/1QwuM1rO8qx6WFIayg_SzxirzDtau7EHY/view?usp=sharing)
 
 ---
 
